@@ -1,4 +1,20 @@
 #' Create Test Update Functions
+#'
+#' @description
+#' TODO
+#'
+#' @param fn_names,fn_name A character vector (string) of function names to create wrappers for
+#' @param .package Character string of the package that `fn_names` exist in
+#'
+#' @return
+#' TODO
+#'
+#' @examples
+#' create_test_update_fns(
+#'   c("updateSelectInput", "updateTextInput"),
+#'   .package = "shiny"
+#' )
+#'
 #' @rdname create_update_tester_fn
 #' @export
 create_test_update_fns <- function(fn_names, .package = "shiny") {

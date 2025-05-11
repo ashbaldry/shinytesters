@@ -6,6 +6,21 @@
 \usage{
 create_test_update_fns(fn_names, .package = "shiny")
 }
+\arguments{
+\item{fn_names, fn_name}{A character vector (string) of function names to create wrappers for}
+
+\item{.package}{Character string of the package that `fn_names` exist in}
+}
+\value{
+TODO
+}
 \description{
-Create Test Update Functions
+TODO
+}
+\examples{
+create_test_update_fns(
+  c("updateSelectInput", "updateTextInput"),
+  .package = "shiny"
+)
+
 }

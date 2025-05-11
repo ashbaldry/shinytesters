@@ -32,7 +32,7 @@ test_that("Able to test updates to shiny::checkboxGroupInput using testServer", 
       updateCheckboxGroupInput(
         inputId = "result",
         label = "New Label",
-        choices = LETTERS,
+        choices = stats::setNames(letters, LETTERS),
         selected = NULL
       )
     })
@@ -40,7 +40,9 @@ test_that("Able to test updates to shiny::checkboxGroupInput using testServer", 
     observeEvent(input$trigger2, {
       updateCheckboxGroupInput(
         inputId = "result",
-        selected = c("F", "G", "P")
+        selected = c("F", "G", "P"),
+        choiceNames = LETTERS[1:20],
+        choiceValues = letters[1:20]
       )
     })
   }
@@ -51,7 +53,11 @@ test_that("Able to test updates to shiny::checkboxGroupInput using testServer", 
       session$setInputs(trigger = 1L)
 
       expect_null(input$result)
-      expect_identical(input$result.choices, LETTERS)
+      expect_identical(input$result.choices, stats::setNames(letters, LETTERS))
+
+      session$setInputs(trigger2 = 1L)
+      expect_identical(input$result, c("F", "G", "P"))
+      expect_identical(input$result.choices, stats::setNames(letters[1:20], LETTERS[1:20]))
     }
   )
 })
