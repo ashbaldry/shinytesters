@@ -6,6 +6,12 @@
 \usage{
 use_shiny_testers(.env = rlang::caller_env())
 }
+\arguments{
+\item{.env}{Environment that defines effect scope. For expert use only.}
+}
+\value{
+TODO
+}
 \description{
-Use Shiny Testers
+TODO
 }

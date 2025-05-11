@@ -1,5 +1,13 @@
 #' Use Shiny Testers
 #'
+#' @description
+#' TODO
+#'
+#' @param .env Environment that defines effect scope. For expert use only.
+#'
+#' @return
+#' TODO
+#'
 #' @export
 use_shiny_testers <- function(.env = rlang::caller_env()) {
   shiny_update_fns <- setdiff(
