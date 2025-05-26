@@ -89,3 +89,33 @@ test_that("Able to test updates to shiny::textInput using testServer", {
     }
   )
 })
+
+test_that("Able to test updates to shiny::numericInput using testServer", {
+  skip_on_cran()
+  use_shiny_testers()
+
+  example_server_fn <- function(input, output, session) {
+    observeEvent(input$trigger, {
+      updateNumericInput(
+        inputId = "result",
+        label = "New Label",
+        value = NULL,
+        max = 12,
+        step = 0.4
+      )
+    })
+  }
+
+  shiny::testServer(
+    app = example_server_fn,
+    expr = {
+      session$setInputs(result = "Example text")
+      session$setInputs(trigger = 1L)
+
+      expect_identical(input$result, "Example text")
+      expect_identical(input$result.label, "New Label")
+      expect_identical(input$result.step, 0.4)
+      expect_null(input$result.min)
+    }
+  )
+})

@@ -2,9 +2,12 @@
 % Please edit documentation in R/create_test_update_fn.R
 \name{create_test_update_fns}
 \alias{create_test_update_fns}
+\alias{create_test_update_fn}
 \title{Create Test Update Functions}
 \usage{
 create_test_update_fns(fn_names, .package = "shiny")
+
+create_test_update_fn(fn_name, .package = "shiny")
 }
 \arguments{
 \item{fn_names, fn_name}{A character vector (string) of function names to create wrappers for}

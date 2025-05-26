@@ -15,7 +15,7 @@
 #'   .package = "shiny"
 #' )
 #'
-#' @rdname create_update_tester_fn
+#' @rdname create_test_update_fn
 #' @export
 create_test_update_fns <- function(fn_names, .package = "shiny") {
   stats::setNames(
@@ -24,6 +24,8 @@ create_test_update_fns <- function(fn_names, .package = "shiny") {
   )
 }
 
+#' @importFrom rlang :=
+#' @rdname create_test_update_fn
 #' @export
 create_test_update_fn <- function(fn_name, .package = "shiny") {
   fn_expr <- get(fn_name, envir = asNamespace(.package))
