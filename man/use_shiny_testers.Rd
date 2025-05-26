@@ -10,10 +10,11 @@ use_shiny_testers(.env = rlang::caller_env())
 \item{.env}{Environment that defines effect scope. For expert use only.}
 }
 \value{
-TODO
+Implicit return of the updated functions in the Shiny package within
+the specified environment.
 }
 \description{
-Enable `update` functions in the Shiny package to be
+Enable `update` functions in the Shiny package to be mocked in tests.
 }
 \examples{
 library(shiny)

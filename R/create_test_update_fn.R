@@ -1,7 +1,8 @@
 #' Create Test Update Functions
 #'
 #' @description
-#' TODO
+#' Given a set of functions from an R package, create a set of mocked functions that
+#' can be used as bindings to test UI updates within `testServer`
 #'
 #' @param fn_names,fn_name A character vector (string) of function names to create wrappers for
 #' @param .package Character string of the package that `fn_names` exist in
@@ -37,7 +38,7 @@ create_test_update_fn <- function(fn_name, .package = "shiny") {
       cli::cli_abort("Unable to determine session argument for {.fn fn_name}")
     }
 
-    id_arg <- grep("[iI]d", fn_args, value = TRUE)
+    id_arg <- grep("[iI]d$", fn_args, value = TRUE)
     if (length(id_arg) != 1L) {
       cli::cli_abort("Unable to determine id argument for {.fn fn_name}")
     }

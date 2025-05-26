@@ -18,7 +18,8 @@ create_test_update_fn(fn_name, .package = "shiny")
 TODO
 }
 \description{
-TODO
+Given a set of functions from an R package, create a set of mocked functions that
+can be used as bindings to test UI updates within `testServer`
 }
 \examples{
 create_test_update_fns(

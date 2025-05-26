@@ -1,12 +1,13 @@
 #' Use Shiny Testers
 #'
 #' @description
-#' Enable `update` functions in the Shiny package to be
+#' Enable `update` functions in the Shiny package to be mocked in tests.
 #'
 #' @param .env Environment that defines effect scope. For expert use only.
 #'
 #' @return
-#' TODO
+#' Implicit return of the updated functions in the Shiny package within
+#' the specified environment.
 #'
 #' @examples
 #' library(shiny)
