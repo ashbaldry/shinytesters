@@ -7,7 +7,14 @@ Description: More about what it does (maybe more than one line).
     Continuation lines should be indented.
 License: What license is it under?
 Encoding: UTF-8
-Imports: cli, rlang
-Suggests: shiny, testthat (>= 3.0.0)
+Imports: 
+    cli, 
+    rlang
+Suggests: 
+    knitr,
+    rmarkdown,
+    shiny,
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 RoxygenNote: 7.3.2
+VignetteBuilder: knitr
