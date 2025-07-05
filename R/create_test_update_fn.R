@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Given a set of functions from an R package, create a set of mocked functions that
-#' can be used as bindings to test UI updates within `testServer`
+#' can be used as bindings to test UI updates within `testServer`.
 #'
 #' @param fn_names,fn_name A character vector (string) of function names to create wrappers for
 #' @param id_arg A character string of the argument in `fn_names` that relates to the input argument.
@@ -19,7 +19,6 @@
 #'   .package = "shiny"
 #' )
 #'
-#' @rdname create_test_update_fn
 #' @export
 create_test_update_fns <- function(fn_names, id_arg = "inputId", .package = "shiny") {
   stats::setNames(
@@ -29,8 +28,6 @@ create_test_update_fns <- function(fn_names, id_arg = "inputId", .package = "shi
 }
 
 #' @importFrom rlang :=
-#' @rdname create_test_update_fn
-#' @export
 create_test_update_fn <- function(fn_name, id_arg = "inputId", .package = "shiny") {
   fn_expr <- get(fn_name, envir = asNamespace(.package))
   fn_body <- quote({

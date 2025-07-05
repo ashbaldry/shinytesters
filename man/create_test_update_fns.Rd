@@ -2,12 +2,9 @@
 % Please edit documentation in R/create_test_update_fn.R
 \name{create_test_update_fns}
 \alias{create_test_update_fns}
-\alias{create_test_update_fn}
 \title{Create Test Update Functions}
 \usage{
 create_test_update_fns(fn_names, id_arg = "inputId", .package = "shiny")
-
-create_test_update_fn(fn_name, id_arg = "inputId", .package = "shiny")
 }
 \arguments{
 \item{fn_names, fn_name}{A character vector (string) of function names to create wrappers for}
@@ -23,7 +20,7 @@ A named list of function expressions, one for each function supplied in `fn_name
 }
 \description{
 Given a set of functions from an R package, create a set of mocked functions that
-can be used as bindings to test UI updates within `testServer`
+can be used as bindings to test UI updates within `testServer`.
 }
 \examples{
 create_test_update_fns(
