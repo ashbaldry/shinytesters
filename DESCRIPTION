@@ -3,8 +3,8 @@ Type: Package
 Title: Update 'Shiny' inputs when using testServer
 Version: 0.1.0
 Authors@R: person("Ashley", "Baldry", email = "arbaldry91@gmail.com", role = c("aut", "cre"))
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
+Description: Create mocked binding to 'Shiny' update functions within test function calls
+    to automatically update input values.
 License: GPL-3
 Encoding: UTF-8
 Imports: 

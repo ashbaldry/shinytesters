@@ -115,3 +115,60 @@ test_that("Able to test updates to shiny::numericInput using testServer", {
     }
   )
 })
+
+test_that("Able to test updates to shiny::updateDateRangeInput using testServer", {
+  use_shiny_testers()
+
+  example_server_fn <- function(input, output, session) {
+    observeEvent(input$trigger, {
+      updateDateRangeInput(
+        inputId = "result",
+        label = "New Label",
+        start = NULL,
+        end = as.Date("2000-01-01"),
+        min = as.Date("1999-12-31")
+      )
+    })
+  }
+
+  shiny::testServer(
+    app = example_server_fn,
+    expr = {
+      session$setInputs(result = as.Date(c(NA, NA)))
+      session$setInputs(trigger = 1L)
+
+      expect_identical(input$result, as.Date(c(NA, "2000-01-01")))
+      expect_identical(input$result.min, as.Date("1999-12-31"))
+      expect_null(input$result.start)
+    }
+  )
+})
+
+test_that("Able to test updates to shiny::updateNavbarPage using testServer", {
+  use_shiny_testers()
+
+  example_server_fn <- function(input, output, session) {
+    observeEvent(input$trigger, {
+      updateNumericInput(
+        inputId = "result",
+        label = "New Label",
+        value = NULL,
+        max = 12,
+        step = 0.4
+      )
+    })
+  }
+
+  shiny::testServer(
+    app = example_server_fn,
+    expr = {
+      session$setInputs(result = "Example text")
+      session$setInputs(trigger = 1L)
+
+      expect_identical(input$result, "Example text")
+      expect_identical(input$result.label, "New Label")
+      expect_identical(input$result.step, 0.4)
+      expect_null(input$result.min)
+    }
+  )
+})

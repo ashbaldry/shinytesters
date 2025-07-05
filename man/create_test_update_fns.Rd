@@ -4,13 +4,27 @@
 \alias{create_test_update_fns}
 \title{Create Test Update Functions}
 \usage{
-create_test_update_fns(fn_names, id_arg = "inputId", .package = "shiny")
+create_test_update_fns(
+  fn_names,
+  id_arg = "inputId",
+  value_args = c("value", "selected"),
+  range_value_args = c("start", "end"),
+  .package = "shiny"
+)
 }
 \arguments{
-\item{fn_names, fn_name}{A character vector (string) of function names to create wrappers for}
+\item{fn_names}{A character vector (string) of function names to create wrappers for}
 
-\item{id_arg}{A character string of the argument in `fn_names` that relates to the input argument.
+\item{id_arg}{A character string of the argument in `fn_names` that relates to the HTML ID argument.
 Default is `"inputId"`}
+
+\item{value_args}{A character vectors of the arguments in `fn_names` that relate to the input
+value arguments.
+Defaults are `"value"` and `"selected`.}
+
+\item{range_value_args}{A character vectors of the arguments in `fn_names` that relate to the input
+value arguments when multiple arguments can be used to update the input.
+Defaults are `"start"` and `"end"`.}
 
 \item{.package}{Character string of the package that `fn_names` exist in.
 Default is `"shiny"`}
