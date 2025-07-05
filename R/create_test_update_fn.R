@@ -63,18 +63,37 @@ create_test_update_fn <- function(fn_name,
       session = session
     )
 
-    choice_args <- grep("choice(Names|Values)", fn_args, value = TRUE)
-    valid_choice_args <- length(choice_args) == 2L &&
-      "choices" %in% fn_args &&
-      is.null(get("choices")) &&
-      !is.null(get("choiceNames"))
-
-    if (valid_choice_args) {
+    if (.package == "shiny") {
       id_choice_value <- paste(id_value, "choices", sep = ".")
-      session$setInputs(!!id_choice_value := stats::setNames(get("choiceValues"), get("choiceNames")))
+
+      choice_args <- grep("choice(Names|Values)", fn_args, value = TRUE)
+      valid_choice_args <- length(choice_args) == 2L &&
+        "choices" %in% fn_args &&
+        is.null(get("choices")) &&
+        !is.null(get("choiceNames"))
+
+      if (valid_choice_args) {
+        update_input(
+          id = id_choice_value,
+          value = stats::setNames(get("choiceValues"), get("choiceNames")),
+          session = session
+        )
+      }
+
+      data_arg <- grep("data", fn_args, value = TRUE)
+      if (length(data_arg) == 1L && !is.null(get("data"))) {
+        update_input(
+          id = id_choice_value,
+          value = names(get("data")),
+          session = session
+        )
+      }
+    } else {
+      choice_args <- data_arg <- NULL
     }
 
-    other_args <- setdiff(fn_args, c(session_arg, id_arg, value_arg, choice_args))
+
+    other_args <- setdiff(fn_args, c(session_arg, id_arg, value_arg, choice_args, data_arg))
     for (other_arg in other_args) {
       update_input(
         id = paste(id_value, other_arg, sep = "."),
@@ -127,5 +146,5 @@ update_value <- function(id,
 }
 
 update_input <- function(id, value, session = shiny::getDefaultReactiveDomain()) {
-  if (!is.null(value)) session$setInputs(!!id := value)
+  if (!is.null(value) && !identical(value, list())) session$setInputs(!!id := value)
 }

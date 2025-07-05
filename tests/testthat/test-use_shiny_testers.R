@@ -1,3 +1,60 @@
+# textArea is identical to text
+test_that("Able to test updates to shiny::textInput using testServer", {
+  use_shiny_testers()
+
+  example_server_fn <- function(input, output, session) {
+    observeEvent(input$trigger, {
+      updateTextInput(
+        inputId = "result",
+        label = "New Label",
+        value = NULL,
+        placeholder = "New placeholder"
+      )
+    })
+  }
+
+  shiny::testServer(
+    app = example_server_fn,
+    expr = {
+      session$setInputs(result = "Example text")
+      session$setInputs(trigger = 1L)
+
+      expect_identical(input$result, "Example text")
+      expect_identical(input$result.label, "New Label")
+      expect_identical(input$result.placeholder, "New placeholder")
+    }
+  )
+})
+
+test_that("Able to test updates to shiny::numericInput using testServer", {
+  use_shiny_testers()
+
+  example_server_fn <- function(input, output, session) {
+    observeEvent(input$trigger, {
+      updateNumericInput(
+        inputId = "result",
+        label = "New Label",
+        value = 5,
+        max = 12,
+        step = 0.4
+      )
+    })
+  }
+
+  shiny::testServer(
+    app = example_server_fn,
+    expr = {
+      session$setInputs(result = 2)
+      session$setInputs(trigger = 1L)
+
+      expect_identical(input$result, 5)
+      expect_identical(input$result.label, "New Label")
+      expect_identical(input$result.step, 0.4)
+      expect_null(input$result.min)
+    }
+  )
+})
+
 test_that("Able to test updates to shiny::checkboxInput using testServer", {
   use_shiny_testers()
 
@@ -22,6 +79,7 @@ test_that("Able to test updates to shiny::checkboxInput using testServer", {
   )
 })
 
+# radioButtons is identical to checkboxGroup
 test_that("Able to test updates to shiny::checkboxGroupInput using testServer", {
   use_shiny_testers()
 
@@ -60,16 +118,16 @@ test_that("Able to test updates to shiny::checkboxGroupInput using testServer", 
   )
 })
 
-test_that("Able to test updates to shiny::textInput using testServer", {
+test_that("Able to test updates to shiny::selectInput using testServer", {
   use_shiny_testers()
 
   example_server_fn <- function(input, output, session) {
     observeEvent(input$trigger, {
-      updateTextInput(
+      updateSelectInput(
         inputId = "result",
         label = "New Label",
-        value = NULL,
-        placeholder = "New placeholder"
+        choices = stats::setNames(letters, LETTERS),
+        selected = NULL
       )
     })
   }
@@ -77,22 +135,71 @@ test_that("Able to test updates to shiny::textInput using testServer", {
   shiny::testServer(
     app = example_server_fn,
     expr = {
-      session$setInputs(result = "Example text")
       session$setInputs(trigger = 1L)
 
-      expect_identical(input$result, "Example text")
-      expect_identical(input$result.label, "New Label")
-      expect_identical(input$result.placeholder, "New placeholder")
+      expect_null(input$result)
+      expect_identical(input$result.choices, stats::setNames(letters, LETTERS))
     }
   )
 })
 
-test_that("Able to test updates to shiny::numericInput using testServer", {
+test_that("Able to test updates to shiny::selectizeInput using testServer", {
   use_shiny_testers()
 
   example_server_fn <- function(input, output, session) {
     observeEvent(input$trigger, {
-      updateNumericInput(
+      updateSelectizeInput(
+        inputId = "result",
+        label = "New Label",
+        choices = stats::setNames(letters, LETTERS),
+        selected = NULL
+      )
+    })
+  }
+
+  shiny::testServer(
+    app = example_server_fn,
+    expr = {
+      session$setInputs(trigger = 1L)
+
+      expect_null(input$result)
+      expect_identical(input$result.choices, stats::setNames(letters, LETTERS))
+      expect_null(input$result.options)
+    }
+  )
+})
+
+test_that("Able to test updates to shiny::varSelectInput using testServer", {
+  use_shiny_testers()
+
+  example_server_fn <- function(input, output, session) {
+    observeEvent(input$trigger, {
+      updateVarSelectInput(
+        inputId = "result",
+        label = "New Label",
+        data = iris,
+        selected = "Sepal.Width"
+      )
+    })
+  }
+
+  shiny::testServer(
+    app = example_server_fn,
+    expr = {
+      session$setInputs(trigger = 1L)
+
+      expect_identical(input$result, "Sepal.Width")
+      expect_identical(input$result.choices, names(iris))
+    }
+  )
+})
+
+test_that("Able to test updates to shiny::sliderInput using testServer", {
+  use_shiny_testers()
+
+  example_server_fn <- function(input, output, session) {
+    observeEvent(input$trigger, {
+      updateSliderInput(
         inputId = "result",
         label = "New Label",
         value = NULL,
@@ -105,10 +212,10 @@ test_that("Able to test updates to shiny::numericInput using testServer", {
   shiny::testServer(
     app = example_server_fn,
     expr = {
-      session$setInputs(result = "Example text")
+      session$setInputs(result = 4)
       session$setInputs(trigger = 1L)
 
-      expect_identical(input$result, "Example text")
+      expect_identical(input$result, 4)
       expect_identical(input$result.label, "New Label")
       expect_identical(input$result.step, 0.4)
       expect_null(input$result.min)
@@ -116,7 +223,63 @@ test_that("Able to test updates to shiny::numericInput using testServer", {
   )
 })
 
-test_that("Able to test updates to shiny::updateDateRangeInput using testServer", {
+test_that("Able to test updates to a ranged shiny::sliderInput using testServer", {
+  use_shiny_testers()
+
+  example_server_fn <- function(input, output, session) {
+    observeEvent(input$trigger, {
+      updateSliderInput(
+        inputId = "result",
+        label = "New Label",
+        value = c(4L, 6L),
+        max = 12,
+        step = 0.4
+      )
+    })
+  }
+
+  shiny::testServer(
+    app = example_server_fn,
+    expr = {
+      session$setInputs(result = c(1L, 10L))
+      session$setInputs(trigger = 1L)
+
+      expect_identical(input$result, c(4L, 6L))
+      expect_identical(input$result.label, "New Label")
+      expect_identical(input$result.step, 0.4)
+      expect_null(input$result.min)
+    }
+  )
+})
+
+test_that("Able to test updates to shiny::dateInput using testServer", {
+  use_shiny_testers()
+
+  example_server_fn <- function(input, output, session) {
+    observeEvent(input$trigger, {
+      updateDateInput(
+        inputId = "result",
+        label = "New Label",
+        value = as.Date("2000-01-01"),
+        min = as.Date("1999-12-31")
+      )
+    })
+  }
+
+  shiny::testServer(
+    app = example_server_fn,
+    expr = {
+      session$setInputs(result = as.Date("2025-01-02"))
+      session$setInputs(trigger = 1L)
+
+      expect_identical(input$result, as.Date("2000-01-01"))
+      expect_identical(input$result.min, as.Date("1999-12-31"))
+      expect_null(input$result.max)
+    }
+  )
+})
+
+test_that("Able to test updates to shiny::dateRangeInput using testServer", {
   use_shiny_testers()
 
   example_server_fn <- function(input, output, session) {
@@ -144,17 +307,15 @@ test_that("Able to test updates to shiny::updateDateRangeInput using testServer"
   )
 })
 
-test_that("Able to test updates to shiny::updateNavbarPage using testServer", {
+# tabsetPanel and navlistPanel are identical
+test_that("Able to test updates to shiny::navbarPage using testServer", {
   use_shiny_testers()
 
   example_server_fn <- function(input, output, session) {
     observeEvent(input$trigger, {
-      updateNumericInput(
+      updateNavbarPage(
         inputId = "result",
-        label = "New Label",
-        value = NULL,
-        max = 12,
-        step = 0.4
+        selected = "new_tab"
       )
     })
   }
@@ -162,13 +323,57 @@ test_that("Able to test updates to shiny::updateNavbarPage using testServer", {
   shiny::testServer(
     app = example_server_fn,
     expr = {
-      session$setInputs(result = "Example text")
+      session$setInputs(result = "old_tab")
       session$setInputs(trigger = 1L)
 
-      expect_identical(input$result, "Example text")
+      expect_identical(input$result, "new_tab")
+    }
+  )
+})
+
+test_that("Able to test updates to shiny::actionLink using testServer", {
+  use_shiny_testers()
+
+  example_server_fn <- function(input, output, session) {
+    observeEvent(input$trigger, {
+      updateActionLink(
+        inputId = "result",
+        label = "New Label"
+      )
+    })
+  }
+
+  shiny::testServer(
+    app = example_server_fn,
+    expr = {
+      session$setInputs(result.label = "Click Me")
+      session$setInputs(trigger = 1L)
+
       expect_identical(input$result.label, "New Label")
-      expect_identical(input$result.step, 0.4)
-      expect_null(input$result.min)
+    }
+  )
+})
+
+test_that("Able to test updates to shiny::actionButton using testServer", {
+  use_shiny_testers()
+
+  example_server_fn <- function(input, output, session) {
+    observeEvent(input$trigger, {
+      updateActionButton(
+        inputId = "result",
+        label = "New Label",
+        disabled = TRUE
+      )
+    })
+  }
+
+  shiny::testServer(
+    app = example_server_fn,
+    expr = {
+      session$setInputs(result.label = "Click Me")
+      session$setInputs(trigger = 1L)
+
+      expect_identical(input$result.label, "New Label")
     }
   )
 })
