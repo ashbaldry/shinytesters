@@ -5,17 +5,21 @@
 \alias{create_test_update_fn}
 \title{Create Test Update Functions}
 \usage{
-create_test_update_fns(fn_names, .package = "shiny")
+create_test_update_fns(fn_names, id_arg = "inputId", .package = "shiny")
 
-create_test_update_fn(fn_name, .package = "shiny")
+create_test_update_fn(fn_name, id_arg = "inputId", .package = "shiny")
 }
 \arguments{
 \item{fn_names, fn_name}{A character vector (string) of function names to create wrappers for}
 
-\item{.package}{Character string of the package that `fn_names` exist in}
+\item{id_arg}{A character string of the argument in `fn_names` that relates to the input argument.
+Default is `"inputId"`}
+
+\item{.package}{Character string of the package that `fn_names` exist in.
+Default is `"shiny"`}
 }
 \value{
-TODO
+A named list of function expressions, one for each function supplied in `fn_names`.
 }
 \description{
 Given a set of functions from an R package, create a set of mocked functions that

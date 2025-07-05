@@ -5,10 +5,13 @@
 #' can be used as bindings to test UI updates within `testServer`
 #'
 #' @param fn_names,fn_name A character vector (string) of function names to create wrappers for
-#' @param .package Character string of the package that `fn_names` exist in
+#' @param id_arg A character string of the argument in `fn_names` that relates to the input argument.
+#' Default is `"inputId"`
+#' @param .package Character string of the package that `fn_names` exist in.
+#' Default is `"shiny"`
 #'
 #' @return
-#' TODO
+#' A named list of function expressions, one for each function supplied in `fn_names`.
 #'
 #' @examples
 #' create_test_update_fns(
@@ -18,7 +21,7 @@
 #'
 #' @rdname create_test_update_fn
 #' @export
-create_test_update_fns <- function(fn_names, .package = "shiny") {
+create_test_update_fns <- function(fn_names, id_arg = "inputId", .package = "shiny") {
   stats::setNames(
     lapply(fn_names, create_test_update_fn, .package = .package),
     fn_names
@@ -28,7 +31,7 @@ create_test_update_fns <- function(fn_names, .package = "shiny") {
 #' @importFrom rlang :=
 #' @rdname create_test_update_fn
 #' @export
-create_test_update_fn <- function(fn_name, .package = "shiny") {
+create_test_update_fn <- function(fn_name, id_arg = "inputId", .package = "shiny") {
   fn_expr <- get(fn_name, envir = asNamespace(.package))
   fn_body <- quote({
     fn_args <- rlang::fn_fmls_names()
@@ -36,11 +39,6 @@ create_test_update_fn <- function(fn_name, .package = "shiny") {
     session_arg <- grep("session", fn_args, value = TRUE)
     if (length(session_arg) != 1L) {
       cli::cli_abort("Unable to determine session argument for {.fn fn_name}")
-    }
-
-    id_arg <- grep("[iI]d$", fn_args, value = TRUE)
-    if (length(id_arg) != 1L) {
-      cli::cli_abort("Unable to determine id argument for {.fn fn_name}")
     }
 
     id_value <- get(id_arg)

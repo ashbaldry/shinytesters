@@ -1,5 +1,4 @@
 test_that("Able to test updates to shiny::checkboxInput using testServer", {
-  skip_on_cran()
   use_shiny_testers()
 
   example_server_fn <- function(input, output, session) {
@@ -24,7 +23,6 @@ test_that("Able to test updates to shiny::checkboxInput using testServer", {
 })
 
 test_that("Able to test updates to shiny::checkboxGroupInput using testServer", {
-  skip_on_cran()
   use_shiny_testers()
 
   example_server_fn <- function(input, output, session) {
@@ -63,7 +61,6 @@ test_that("Able to test updates to shiny::checkboxGroupInput using testServer", 
 })
 
 test_that("Able to test updates to shiny::textInput using testServer", {
-  skip_on_cran()
   use_shiny_testers()
 
   example_server_fn <- function(input, output, session) {
@@ -91,7 +88,6 @@ test_that("Able to test updates to shiny::textInput using testServer", {
 })
 
 test_that("Able to test updates to shiny::numericInput using testServer", {
-  skip_on_cran()
   use_shiny_testers()
 
   example_server_fn <- function(input, output, session) {
