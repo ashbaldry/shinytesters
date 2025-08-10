@@ -40,6 +40,7 @@
 #'   )
 #' })
 #'
+#' @importFrom rlang !!!
 #' @export
 use_shiny_testers <- function(.env = rlang::caller_env()) {
   shiny_update_fns <- setdiff(

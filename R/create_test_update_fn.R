@@ -37,7 +37,7 @@ create_test_update_fns <- function(fn_names,
   )
 }
 
-#' @importFrom rlang :=
+#' @importFrom rlang := !!
 create_test_update_fn <- function(fn_name,
                                   id_arg = "inputId",
                                   value_args = c("value", "selected"),
