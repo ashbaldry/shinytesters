@@ -19,3 +19,4 @@ Config/testthat/edition: 3
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 Language: en-GB
+URL: https://ashbaldry.github.io/shinytesters/
