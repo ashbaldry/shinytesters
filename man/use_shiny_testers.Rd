@@ -5,21 +5,26 @@
 \alias{with_shiny_testers}
 \title{Use Shiny Testers}
 \usage{
-use_shiny_testers(.env = rlang::caller_env())
+use_shiny_testers(..., .package = "shiny", .env = rlang::caller_env())
 
-with_shiny_testers(code)
+with_shiny_testers(code, ..., .package = "shiny")
 }
 \arguments{
+\item{...}{Arguments passed to \code{\link{create_test_update_fns}}}
+
+\item{.package}{Character string of the package that the update functions exist in.
+Default is `"shiny"`}
+
 \item{.env}{Environment that defines effect scope. For expert use only.}
 
 \item{code}{Code to execute with specified bindings.}
 }
 \value{
-Implicit return of the updated functions in the Shiny package within
+Implicit return of the updated functions in the supplied package within
 the specified environment.
 }
 \description{
-Enable `update` functions in the Shiny package to be mocked in tests.
+Enable `update` functions in the Shiny or Shiny extension package to be mocked in tests.
 }
 \examples{
 library(shiny)

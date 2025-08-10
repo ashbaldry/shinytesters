@@ -57,7 +57,7 @@ create_test_update_fn <- function(fn_name,
 
     session_arg <- grep("session", fn_args, value = TRUE)
     if (length(session_arg) != 1L) {
-      cli::cli_abort("Unable to determine session argument for {.fn fn_name}")
+      cli::cli_abort("Unable to determine session argument for {.fn {fn_name}}")
     }
 
     id_value <- get(id_arg)
