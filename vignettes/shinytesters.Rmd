@@ -21,7 +21,7 @@ library(shinytesters)
 
 The shinytesters package is a way to update input values whilst running tests through `shiny::testServer`. 
 
-When using `testServer`, any "update" function in shiny (or any shiny related package) does nothing to the inputs within the `session` object, and therefore the tests litter in expressions to manually update inputs using `session$setInputs`. This can create a disconnect between what is expected to happen in the server-side and what is actually happening.
+When using `testServer`, any "update" function in shiny (or any shiny extension package) does nothing to the inputs within the `session` object, and therefore the tests litter in expressions to manually update inputs using `session$setInputs`. This can create a disconnect between what is expected to happen in the server-side and what is actually happening.
 
 shinytesters enables this through the function `create_test_update_fns`. This function takes existing function definitions, and converts the body of the function to communicate with the test session object rather than the unavailable UI. By including what the ID and value arguments, it is enough to determine what the input is going to be after calling the update function.
 
