@@ -70,7 +70,7 @@
 <p>The shinytesters package is a way to update input values whilst
 running tests through <code><a href="https://rdrr.io/pkg/shiny/man/testServer.html" class="external-link">shiny::testServer</a></code>.</p>
 <p>When using <code>testServer</code>, any “update” function in shiny
-(or any shiny related package) does nothing to the inputs within the
+(or any shiny extension package) does nothing to the inputs within the
 <code>session</code> object, and therefore the tests litter in
 expressions to manually update inputs using
 <code>session$setInputs</code>. This can create a disconnect between

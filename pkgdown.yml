@@ -3,7 +3,7 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   shinytesters: shinytesters.html
-last_built: 2025-08-10T17:29Z
+last_built: 2025-08-10T17:34Z
 urls:
   reference: https://ashbaldry.github.io/shinytesters/reference
   article: https://ashbaldry.github.io/shinytesters/articles
