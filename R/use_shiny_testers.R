@@ -61,6 +61,7 @@ use_shiny_testers <- function(..., .package = "shiny", .env = rlang::caller_env(
 #' @param code Code to execute with specified bindings.
 #'
 #' @rdname use_shiny_testers
+#' @export
 with_shiny_testers <- function(code, ..., .package = "shiny") {
   use_shiny_testers(..., .package = .package)
   code

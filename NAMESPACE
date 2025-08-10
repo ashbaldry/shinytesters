@@ -2,6 +2,7 @@
 
 export(create_test_update_fns)
 export(use_shiny_testers)
+export(with_shiny_testers)
 importFrom(rlang,"!!!")
 importFrom(rlang,"!!")
 importFrom(rlang,":=")
