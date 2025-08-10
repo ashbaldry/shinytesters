@@ -111,11 +111,11 @@ expression.</p>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="shiny-package-helpers">Shiny Package Helpers<a class="anchor" aria-label="anchor" href="#shiny-package-helpers"></a>
+<h2 id="package-level-helpers">Package Level Helpers<a class="anchor" aria-label="anchor" href="#package-level-helpers"></a>
 </h2>
-<p>For the shiny package specifically, the function
-<code>use_shiny_testers</code> is available as a blanket assignment of
-all update functions in the shiny package.</p>
+<p>At the package level, the function <code>use_shiny_testers</code> is
+available as a blanket assignment of all update functions in the
+specified package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Simple module where when a button is clicked, a select input is updated to select "h" out of the letters</span></span>
 <span><span class="fu"><a href="https://testthat.r-lib.org/reference/test_that.html" class="external-link">test_that</a></span><span class="op">(</span><span class="st">"When the button is clicked, the options update"</span>, <span class="op">{</span></span>
