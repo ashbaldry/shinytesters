@@ -16,13 +16,13 @@ create_test_update_fns(
 \item{fn_names}{A character vector (string) of function names to create wrappers for}
 
 \item{id_arg}{A character string of the argument in `fn_names` that relates to the HTML ID argument.
-Default is `"inputId"`}
+Default is \code{"inputId"}}
 
-\item{value_args}{A character vectors of the arguments in `fn_names` that relate to the input
+\item{value_args}{A character vector of the arguments in `fn_names` that relate to the input
 value arguments.
 Defaults are `"value"` and `"selected`.}
 
-\item{range_value_args}{A character vectors of the arguments in `fn_names` that relate to the input
+\item{range_value_args}{A character vector of the arguments in `fn_names` that relate to the input
 value arguments when multiple arguments can be used to update the input.
 Defaults are `"start"` and `"end"`.}
 

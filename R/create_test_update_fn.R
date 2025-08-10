@@ -6,11 +6,11 @@
 #'
 #' @param fn_names A character vector (string) of function names to create wrappers for
 #' @param id_arg A character string of the argument in `fn_names` that relates to the HTML ID argument.
-#' Default is `"inputId"`
-#' @param value_args A character vectors of the arguments in `fn_names` that relate to the input
+#' Default is \code{"inputId"}
+#' @param value_args A character vector of the arguments in `fn_names` that relate to the input
 #' value arguments.
 #' Defaults are `"value"` and `"selected`.
-#' @param range_value_args A character vectors of the arguments in `fn_names` that relate to the input
+#' @param range_value_args A character vector of the arguments in `fn_names` that relate to the input
 #' value arguments when multiple arguments can be used to update the input.
 #' Defaults are `"start"` and `"end"`.
 #' @param .package Character string of the package that `fn_names` exist in.
@@ -32,7 +32,14 @@ create_test_update_fns <- function(fn_names,
                                    range_value_args = c("start", "end"),
                                    .package = "shiny") {
   stats::setNames(
-    lapply(fn_names, create_test_update_fn, .package = .package),
+    lapply(
+      fn_names,
+      create_test_update_fn,
+      id_arg = id_arg,
+      value_args = value_args,
+      range_value_args = range_value_args,
+      .package = .package
+    ),
     fn_names
   )
 }

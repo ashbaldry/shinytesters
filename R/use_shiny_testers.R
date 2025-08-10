@@ -40,7 +40,6 @@
 #'   )
 #' })
 #'
-#' @importFrom rlang !!!
 #' @export
 use_shiny_testers <- function(.env = rlang::caller_env()) {
   shiny_update_fns <- setdiff(
@@ -53,4 +52,12 @@ use_shiny_testers <- function(.env = rlang::caller_env()) {
     .package = "shiny",
     .env = .env
   )
+}
+
+#' @param code Code to execute with specified bindings.
+#'
+#' @rdname use_shiny_testers
+with_shiny_testers <- function(code) {
+  use_shiny_testers()
+  code
 }

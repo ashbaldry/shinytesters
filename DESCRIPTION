@@ -8,7 +8,7 @@ Description: Create mocked binding to 'Shiny' update functions within test funct
 License: GPL-3
 Encoding: UTF-8
 Imports: 
-    cli, 
+    cli,
     rlang
 Suggests: 
     knitr,
@@ -18,3 +18,4 @@ Suggests:
 Config/testthat/edition: 3
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
+Language: en-GB

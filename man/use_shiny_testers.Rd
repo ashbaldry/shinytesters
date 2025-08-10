@@ -2,12 +2,17 @@
 % Please edit documentation in R/use_shiny_testers.R
 \name{use_shiny_testers}
 \alias{use_shiny_testers}
+\alias{with_shiny_testers}
 \title{Use Shiny Testers}
 \usage{
 use_shiny_testers(.env = rlang::caller_env())
+
+with_shiny_testers(code)
 }
 \arguments{
 \item{.env}{Environment that defines effect scope. For expert use only.}
+
+\item{code}{Code to execute with specified bindings.}
 }
 \value{
 Implicit return of the updated functions in the Shiny package within

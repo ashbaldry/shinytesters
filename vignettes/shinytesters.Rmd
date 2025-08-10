@@ -13,8 +13,107 @@ knitr::opts_chunk$set(
   comment = "#>",
   eval = FALSE
 )
+
+library(shiny)
+library(testthat)
+library(shinytesters)
 ```
 
-```{r setup}
-library(shinytesters)
+The shinytesters package is a way to update input values whilst running tests through `shiny::testServer`. 
+
+When using `testServer`, any "update" function in shiny (or any shiny related package) does nothing to the inputs within the `session` object, and therefore the tests litter in expressions to manually update inputs using `session$setInputs`. This can create a disconnect between what is expected to happen in the server-side and what is actually happening.
+
+shinytesters enables this through the function `create_test_update_fn`. This function takes existing function definitions, and converts the body of the function to communicate with the test session object rather than the unavailable UI. By including what the ID and value arguments, it is enough to determine what the input is going to be after calling the update function.
+
+In addition, it also takes all of the other arguments that are passed to the update function, and gives them an input value too, appending the argument name to the ID for an easy extraction in the test expression.
+
+```{r create_example}
+# Simple module where when a button is clicked, a select input is updated to select "h" out of the letters
+server_module_fn <- function(id) {
+  moduleServer(id, function(input, output, session) {
+    observeEvent(input$button, {
+      updateSelectInput(inputId = "options", choices = letters, selected = "h")
+    })
+  })
+}
+
+test_that("When the button is clicked, the options update", {
+  local_mocked_bindings(
+    updateSelectInput = create_test_update_fn("updateSelectInput"), 
+    .package = "shiny" 
+  )
+  
+  testServer(
+    app = server_module_fn, 
+    expr = {
+      # Uninitialised modulehas NULL for inputs
+      expect_null(input$options)
+      
+      # After clicking button, options choices and selected option update 
+      session$setInputs(button = 1L)
+      expect_identical(input$options, "h")
+      expect_identical(input$options.choices, letters)
+    }
+  )
+})
+```
+
+If there is more than one function required to create mocked bindings for, then `create_test_update_fns` can be used. This creates a named list of the required functions.
+
+```{r create_multi_example}
+# Simple module where when a button is clicked, a select input is updated to select "h" out of the letters
+# and checkbox is selected
+server_module_fn <- function(id) {
+  moduleServer(id, function(input, output, session) {
+    observeEvent(input$button, {
+      updateSelectInput(inputId = "options", choices = letters, selected = "h")
+      updateCheckboxInput(inputId = "check", value = TRUE)
+    })
+  })
+}
+
+test_that("When the button is clicked, the options update", {
+  local_mocked_bindings(
+    !!!create_test_update_fns(c("updateSelectInput", "updateCheckboxInput")),
+    .package = "shiny" 
+  )
+  
+  testServer(
+    app = server_module_fn, 
+    expr = {
+      # Uninitialised modulehas NULL for inputs
+      expect_null(input$options)
+      
+      # After clicking button, options choices and selected option update 
+      session$setInputs(button = 1L)
+      expect_identical(input$options, "h")
+      expect_true(input$check)
+    }
+  )
+})
+```
+
+## Shiny Package Helpers
+
+For the shiny package specifically, the function `use_shiny_testers` is available as a blanket assignment of all update functions in the shiny package.
+
+```{r use_example}
+# Simple module where when a button is clicked, a select input is updated to select "h" out of the letters
+test_that("When the button is clicked, the options update", {
+  use_shiny_testers()
+  
+  testServer(
+    app = server_module_fn, 
+    expr = {
+      # Uninitialised modulehas NULL for inputs
+      expect_null(input$options)
+      
+      # After clicking button, options choices and selected option update 
+      session$setInputs(button = 1L)
+      expect_identical(input$options, "h")
+      expect_identical(input$options.choices, letters)
+      expect_true(input$check)
+    }
+  )
+})
 ```
