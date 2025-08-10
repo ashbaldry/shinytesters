@@ -61,9 +61,9 @@ test_that("When the button is clicked, the options update", {
 })
 ```
 
-## Shiny Package Helpers
+## Package Level Helpers
 
-For the shiny package specifically, the function `use_shiny_testers` is available as a blanket assignment of all update functions in the shiny package.
+At the package level, the function `use_shiny_testers` is available as a blanket assignment of all update functions in the specified package.
 
 ```{r use_example}
 # Simple module where when a button is clicked, a select input is updated to select "h" out of the letters
