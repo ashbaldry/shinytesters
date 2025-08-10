@@ -6,7 +6,7 @@ Authors@R: person("Ashley", "Baldry", email = "arbaldry91@gmail.com", role = c("
 Description: Create mocked binding to 'Shiny' update functions within test function calls
     to automatically update input values.
 URL: https://ashbaldry.github.io/shinytesters/
-BugReports: https://ashbaldry.github.io/shinytesters/issues
+BugReports: https://github.com/ashbaldry/shinytesters/issues
 License: GPL-3
 Encoding: UTF-8
 Imports: 
