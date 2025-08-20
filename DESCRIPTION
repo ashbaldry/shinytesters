@@ -1,6 +1,6 @@
 Package: shinytesters
 Type: Package
-Title: Update 'Shiny' inputs when using testServer
+Title: Update 'Shiny' Inputs when using testServer
 Version: 0.1.0
 Authors@R: person("Ashley", "Baldry", email = "arbaldry91@gmail.com", role = c("aut", "cre"))
 Description: Create mocked binding to 'Shiny' update functions within test function calls
